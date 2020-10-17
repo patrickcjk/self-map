@@ -1,12 +1,18 @@
+#pragma once
 #include <Windows.h>
 #include <ntstatus.h>
 #include <iostream>
 #include <fstream>
 
+#include "colormod.h"
+
+#define RELOC_FLAG64(RelInfo) ((RelInfo >> 0x0C) == IMAGE_REL_BASED_DIR64)
+
+using entry_point_ = BOOL(WINAPI*)(void* hDll, DWORD dwReason, void* pReserved);
+
 class self_map
 {
 private:
-	HANDLE						process_handle;
 	PBYTE						buffer;
 	PBYTE						module_base;
 	PIMAGE_DOS_HEADER			dos_header;
